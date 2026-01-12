@@ -333,7 +333,7 @@ func resourceGithubBranchProtectionRead(d *schema.ResourceData, meta any) error 
 		return err
 	}
 
-	approvingReviews := setApprovingReviews(protection, data, meta)
+	approvingReviews := setApprovingReviews(protection, data)
 	err = d.Set(PROTECTION_REQUIRES_APPROVING_REVIEWS, approvingReviews)
 	if err != nil {
 		log.Printf("[DEBUG] Problem setting '%s' in %s %s branch protection (%s)", PROTECTION_REQUIRES_APPROVING_REVIEWS, protection.Repository.Name, protection.Pattern, d.Id())
@@ -345,13 +345,13 @@ func resourceGithubBranchProtectionRead(d *schema.ResourceData, meta any) error 
 		log.Printf("[DEBUG] Problem setting '%s' in %s %s branch protection (%s)", PROTECTION_REQUIRES_STATUS_CHECKS, protection.Repository.Name, protection.Pattern, d.Id())
 	}
 
-	restrictsPushes := setPushes(protection, data, meta)
+	restrictsPushes := setPushes(protection, data)
 	err = d.Set(PROTECTION_RESTRICTS_PUSHES, restrictsPushes)
 	if err != nil {
 		log.Printf("[DEBUG] Problem setting '%s' in %s %s branch protection (%s)", PROTECTION_RESTRICTS_PUSHES, protection.Repository.Name, protection.Pattern, d.Id())
 	}
 
-	forcePushBypassers := setForcePushBypassers(protection, data, meta)
+	forcePushBypassers := setForcePushBypassers(protection, data)
 	err = d.Set(PROTECTION_FORCE_PUSHES_BYPASSERS, forcePushBypassers)
 	if err != nil {
 		log.Printf("[DEBUG] Problem setting '%s' in %s %s branch protection (%s)", PROTECTION_FORCE_PUSHES_BYPASSERS, protection.Repository.Name, protection.Pattern, d.Id())
